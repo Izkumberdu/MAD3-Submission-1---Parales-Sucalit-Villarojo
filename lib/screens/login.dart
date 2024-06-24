@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:midterm_mobile_3/consts/styles.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
+  State<Login> createState() => _LoginPageState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
+class _LoginPageState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -197,14 +197,14 @@ class _WelcomePageState extends State<WelcomePage> {
   ElevatedButton trackButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return const PatientInfoPage();
-            },
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) {
+        //       return LoginPag();
+        //     },
+        //   ),
+        // );
       },
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(265, 45),
