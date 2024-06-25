@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:midterm_mobile_3/routing/router.dart';
 import 'package:midterm_mobile_3/screens/login.dart';
 
 void main() {
@@ -11,8 +12,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Login(),
+    return MaterialApp.router(
+      routerConfig: GlobalRouter().router,
+      debugShowCheckedModeBanner: false,
+      title: "PatientLink",
     );
   }
 }
