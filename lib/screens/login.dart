@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:midterm_mobile_3/consts/sizeConfig.dart';
 import 'package:midterm_mobile_3/consts/styles.dart';
@@ -15,15 +16,20 @@ class Login extends StatefulWidget {
 }
 
 class _LoginPageState extends State<Login> {
+  late GlobalKey<FormState> formkey;
   late TextEditingController patientID;
   late TextEditingController password;
+  late FocusNode patientIDFN, passwordFN;
   bool _isObscured = true;
 
   @override
   void initState() {
     super.initState();
+    formkey = GlobalKey<FormState>();
     patientID = TextEditingController();
     password = TextEditingController();
+    patientIDFN = FocusNode();
+    passwordFN = FocusNode();
   }
 
   @override
@@ -68,23 +74,26 @@ class _LoginPageState extends State<Login> {
       child: SizedBox(
         width: 300,
         height: 700,
-        child: Column(
-          children: [
-            const SizedBox(height: 56),
-            inputTitle(),
-            const SizedBox(height: 17),
-            patientIDfield(),
-            const SizedBox(height: 15),
-            passwordField(),
-            const SizedBox(height: 30),
-            trackButton(context),
-            const SizedBox(height: 50),
-            alternative(),
-            const SizedBox(height: 50),
-            updateLog(),
-            const SizedBox(height: 15),
-            scanQR()
-          ],
+        child: Form(
+          key: formkey,
+          child: Column(
+            children: [
+              const SizedBox(height: 56),
+              inputTitle(),
+              const SizedBox(height: 17),
+              patientIDfield(),
+              const SizedBox(height: 15),
+              passwordField(),
+              const SizedBox(height: 30),
+              trackButton(context),
+              const SizedBox(height: 50),
+              alternative(),
+              const SizedBox(height: 50),
+              updateLog(),
+              const SizedBox(height: 15),
+              scanQR(),
+            ],
+          ),
         ),
       ),
     );
@@ -94,50 +103,57 @@ class _LoginPageState extends State<Login> {
     return Text('OR', style: interBold.copyWith(fontSize: 12, color: orange));
   }
 
-  Container passwordField() {
-    return Container(
-      margin: const EdgeInsets.only(left: 0, right: 0),
-      child: TextFormField(
-        controller: password,
-        obscureText: _isObscured,
-        decoration: InputDecoration(
-          labelText: 'Password',
-          labelStyle: interRegular.copyWith(fontSize: 14, color: orange),
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffFE8570)),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Color(0xffFE8570)),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffFE8570)),
-          ),
-          prefixIcon: Transform.scale(
-            scale: 0.5,
-            child: Icon(
-              Icons.lock_open,
-              size: 50,
-              color: orange,
+  Widget passwordField() {
+    return Flexible(
+      child: Container(
+        margin: const EdgeInsets.only(left: 0, right: 0),
+        child: TextFormField(
+          focusNode: passwordFN,
+          controller: password,
+          obscureText: _isObscured,
+          onEditingComplete: () {
+            passwordFN.unfocus();
+          },
+          validator: RequiredValidator(errorText: "Password is Required").call,
+          decoration: InputDecoration(
+            labelText: 'Password',
+            labelStyle: interRegular.copyWith(fontSize: 14, color: orange),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xffFE8570)),
             ),
-          ),
-          suffixIcon: GestureDetector(
-            onTap: () {
-              setState(() {
-                _isObscured = !_isObscured;
-              });
-            },
-            child: Transform.scale(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xffFE8570)),
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xffFE8570)),
+            ),
+            prefixIcon: Transform.scale(
               scale: 0.5,
               child: Icon(
-                _isObscured ? Icons.visibility_off : Icons.visibility,
-                size: 40,
+                Icons.lock_open,
+                size: 50,
                 color: orange,
+              ),
+            ),
+            suffixIcon: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isObscured = !_isObscured;
+                });
+              },
+              child: Transform.scale(
+                scale: 0.5,
+                child: Icon(
+                  _isObscured ? Icons.visibility_off : Icons.visibility,
+                  size: 40,
+                  color: orange,
+                ),
               ),
             ),
           ),
@@ -146,36 +162,44 @@ class _LoginPageState extends State<Login> {
     );
   }
 
-  Container patientIDfield() {
-    return Container(
-      margin: const EdgeInsets.only(left: 0, right: 0),
-      child: TextFormField(
-        controller: patientID,
-        decoration: InputDecoration(
-          labelText: 'Patient ID',
-          labelStyle:
-              GoogleFonts.poppins(fontSize: 14, color: const Color(0xffFE8570)),
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffFE8570)),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Color(0xffFE8570)),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffFE8570)),
-          ),
-          prefixIcon: Transform.scale(
-            scale: 0.5,
-            child: Icon(
-              Icons.person_3_outlined,
-              size: 50,
-              color: orange,
+  Widget patientIDfield() {
+    return Flexible(
+      child: Container(
+        margin: const EdgeInsets.only(left: 0, right: 0),
+        child: TextFormField(
+          focusNode: patientIDFN,
+          controller: patientID,
+          onEditingComplete: () {
+            passwordFN.requestFocus();
+          },
+          validator:
+              RequiredValidator(errorText: "Patient ID is Required").call,
+          decoration: InputDecoration(
+            labelText: 'Patient ID',
+            labelStyle: GoogleFonts.poppins(
+                fontSize: 14, color: const Color(0xffFE8570)),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xffFE8570)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xffFE8570)),
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xffFE8570)),
+            ),
+            prefixIcon: Transform.scale(
+              scale: 0.5,
+              child: Icon(
+                Icons.person_3_outlined,
+                size: 50,
+                color: orange,
+              ),
             ),
           ),
         ),
@@ -245,15 +269,8 @@ class _LoginPageState extends State<Login> {
 
   ElevatedButton trackButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () async {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) {
-        //       return LoginPag();
-        //     },
-        //   ),
-        // );
+      onPressed: () {
+        onSubmit();
       },
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(265, 45),
@@ -305,5 +322,11 @@ class _LoginPageState extends State<Login> {
         ),
       ],
     );
+  }
+
+  onSubmit() {
+    if (formkey.currentState?.validate() ?? false) {
+      // Handle form submission
+    }
   }
 }
