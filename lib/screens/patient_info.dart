@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:midterm_mobile_3/consts/styles.dart';
 
 class PatientInfoPage extends StatefulWidget {
+  static const String route = '/patientInfo';
+  static const String name = 'Patient Info';
   const PatientInfoPage({super.key});
 
   @override
@@ -50,7 +52,7 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
             height: 150,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/samplePatient.png'),
+                image: AssetImage('assets/images/samplePatient.png'),
                 fit: BoxFit.contain,
               ),
             ),

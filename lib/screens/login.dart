@@ -1,10 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:midterm_mobile_3/consts/sizeConfig.dart';
 import 'package:midterm_mobile_3/consts/styles.dart';
+import 'package:midterm_mobile_3/controllers/auth_controller.dart';
 
 class Login extends StatefulWidget {
   static const String route = '/login';
@@ -326,7 +325,12 @@ class _LoginPageState extends State<Login> {
 
   onSubmit() {
     if (formkey.currentState?.validate() ?? false) {
-      // Handle form submission
+      try {
+        AuthController.I.checkUser(patientID.text.trim(), password.text.trim());
+      } catch (e) {
+        // Handle or log the error here
+        print('Error in onSubmit: $e');
+      }
     }
   }
 }
