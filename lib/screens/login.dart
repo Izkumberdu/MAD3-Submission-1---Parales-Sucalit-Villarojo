@@ -58,7 +58,7 @@ class _LoginPageState extends State<Login> {
     );
   }
 
-//METHODS
+  //METHODS
   Positioned appName() {
     return Positioned(
       top: 169.98,
@@ -269,7 +269,7 @@ class _LoginPageState extends State<Login> {
   ElevatedButton trackButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        onSubmit();
+        onSubmit(context);
       },
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(265, 45),
@@ -323,14 +323,35 @@ class _LoginPageState extends State<Login> {
     );
   }
 
-  onSubmit() {
+  Future<void> onSubmit(BuildContext context) async {
     if (formkey.currentState?.validate() ?? false) {
       try {
-        AuthController.I.checkUser(patientID.text.trim(), password.text.trim());
+        await AuthController.I.checkUser(patientID.text.trim(), password.text.trim());
+        // Navigate to the next page if login is successful
+        Navigator.pushNamed(context, '/nextPage');
       } catch (e) {
-        // Handle or log the error here
-        print('Error in onSubmit: $e');
+        showErrorDialog(context, 'Login Failed', e.toString());
       }
     }
+  }
+
+  void showErrorDialog(BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
