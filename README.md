@@ -10,12 +10,19 @@ GoRouter/Session Application
 **2) Login Account Logic - Villarojo**
 - Must be able to log in with the predefined account
 
-**3)User Interface Design - Parales**
+**3) User Interface Design - Parales**
 - PatientLink UI screens and forms
 
-**4-6)Caching Dependency - Sucalit**
+**4) Caching Dependency - Parales**
+- Setup of session
 - Sessions must persist between restarts
+
+**5) Caching Dependency - Sucalit**
+- Interaction with logout
 - Sessions must be cleared after logout
 
-**7)Router Change Reaction - Parales**
-- Router must react to changes in authentication state.
+**6) Logging Out Functionality - Sucalit**
+- User must be able to log in or log out
+
+**7) Router Change Reaction - Sucalit**
+- Router must react to changes in authentication state. (ex. Log out causes state to be unauthenticated again)
