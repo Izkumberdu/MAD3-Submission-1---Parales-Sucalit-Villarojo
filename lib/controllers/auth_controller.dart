@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:midterm_mobile_3/controllers/state.dart';
+import 'package:midterm_mobile_3/routing/shared_preferences_helper.dart';
 
 class AuthController with ChangeNotifier {
   static void initialize() {
@@ -19,21 +20,27 @@ class AuthController with ChangeNotifier {
       bool isLoggedIn = await smLogin.checkUser(patientID, password);
       if (isLoggedIn) {
         state = AuthState.authenticated;
+        await SharedPreferencesHelper.setToken('your_token_here');
       } else {
         state = AuthState.unauthenticated;
+        await SharedPreferencesHelper.clearToken();
       }
     } catch (e) {
       state = AuthState.unauthenticated;
+      await SharedPreferencesHelper.clearToken();
       throw e;
     } finally {
       notifyListeners();
     }
   }
 
-  void logout() {
+  void logout() async {
     state = AuthState.unauthenticated;
+    await SharedPreferencesHelper.clearToken();
     notifyListeners();
   }
+
+
 }
 
 class SimulateLogin {
