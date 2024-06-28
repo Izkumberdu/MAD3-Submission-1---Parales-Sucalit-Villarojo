@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:midterm_mobile_3/consts/styles.dart';
+import 'package:midterm_mobile_3/controllers/auth_controller.dart';
+import 'package:midterm_mobile_3/screens/login.dart';
 
 class PatientInfoPage extends StatefulWidget {
   static const String route = '/patientInfo';
@@ -11,6 +14,20 @@ class PatientInfoPage extends StatefulWidget {
 }
 
 class _PatientInfoPageState extends State<PatientInfoPage> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,12 +91,13 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              AuthController.instance.logout();
+              context.go(Login.route);
             },
             child: const Align(
               alignment: Alignment.topRight,
               child: Icon(
-                Icons.arrow_back_ios,
+                Icons.logout,
                 color: Color(0xFFFE8570),
                 size: 30,
               ),
@@ -174,10 +192,12 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                 thumbVisibility: true,
                 thumbColor: const Color(0xFFFE8570),
                 radius: const Radius.circular(20),
+                controller: _scrollController,
                 child: ListView.separated(
                   padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                   scrollDirection: Axis.vertical,
                   itemCount: 4,
+                  controller: _scrollController,
                   separatorBuilder: (BuildContext context, int index) =>
                       const SizedBox(height: 8),
                   itemBuilder: (BuildContext context, int index) {

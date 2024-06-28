@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:midterm_mobile_3/consts/sizeConfig.dart';
 import 'package:midterm_mobile_3/consts/styles.dart';
 import 'package:midterm_mobile_3/controllers/auth_controller.dart';
+import 'package:midterm_mobile_3/controllers/state.dart';
 
 class Login extends StatefulWidget {
   static const String route = '/login';
@@ -327,13 +328,18 @@ class _LoginPageState extends State<Login> {
     if (formkey.currentState?.validate() ?? false) {
       try {
         await AuthController.I.checkUser(patientID.text.trim(), password.text.trim());
-        // Navigate to the next page if login is successful
-        Navigator.pushNamed(context, '/nextPage');
+        if (AuthController.I.state == AuthState.authenticated) {
+          // Navigate to the next page if login is successful
+          Navigator.pushNamed(context, '/nextPage');
+        } else {
+          showErrorDialog(context, 'Login Failed', 'Invalid patient ID or password.');
+        }
       } catch (e) {
         showErrorDialog(context, 'Login Failed', e.toString());
       }
     }
   }
+
 
   void showErrorDialog(BuildContext context, String title, String content) {
     showDialog(

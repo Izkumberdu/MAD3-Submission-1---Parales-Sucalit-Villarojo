@@ -22,12 +22,17 @@ class AuthController with ChangeNotifier {
       } else {
         state = AuthState.unauthenticated;
       }
-      notifyListeners();
     } catch (e) {
       state = AuthState.unauthenticated;
-      notifyListeners();
       throw e;
+    } finally {
+      notifyListeners();
     }
+  }
+
+  void logout() {
+    state = AuthState.unauthenticated;
+    notifyListeners();
   }
 }
 
@@ -35,7 +40,7 @@ class SimulateLogin {
   Map<String, String> users = {"Joel": "room4"};
 
   Future<bool> checkUser(String patientID, String password) async {
-    await Future.delayed(Duration(seconds: 1)); 
+    await Future.delayed(Duration(seconds: 1));
     if (users[patientID] == null) throw Exception("Patient does not exist");
     if (users[patientID] != password) throw Exception("Incorrect Password");
     return users[patientID] == password;
