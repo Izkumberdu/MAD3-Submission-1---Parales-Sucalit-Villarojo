@@ -10,7 +10,7 @@ GoRouter/Session Application
 **2) Login Account Logic - Villarojo**
 - Must be able to log in with the predefined account
 
-**3)User Interface Design (Aesthetics) - Parales**
+**3)User Interface Design - Parales**
 - PatientLink UI screens and forms
 
 **4-6)Caching Dependency - Sucalit**
