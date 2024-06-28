@@ -1,16 +1,21 @@
-# midterm_mobile_3
+# MAD3-Submission-1 - Parales, Sucalit, Villarojo
+## Midterm Activity
+GoRouter/Session Application
 
-A new Flutter project.
+## Workflow Distribution
 
-## Getting Started
+**1) GoRouter Setup - Villarojo**
+- Uses the GoRouter routing
 
-This project is a starting point for a Flutter application.
+**2) Login Account Logic - Villarojo**
+- Must be able to log in with the predefined account
 
-A few resources to get you started if this is your first Flutter project:
+**3)User Interface Design (Aesthetics) - Parales**
+- PatientLink UI screens and forms
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**4-6)Caching Dependency - Sucalit**
+- Sessions must persist between restarts
+- Sessions must be cleared after logout
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**7)Router Change Reaction - Parales**
+- Router must react to changes in authentication state.
