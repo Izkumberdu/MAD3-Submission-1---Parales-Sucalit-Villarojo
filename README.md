@@ -7,21 +7,19 @@ GoRouter/Session Application
 **1) GoRouter Setup - Villarojo**
 - Uses the GoRouter routing
 
-**2) Login Account Logic - Villarojo**
+**2) Account Logic - Villarojo**
 - Must be able to log in with the predefined account
 
 **3) User Interface Design - Parales**
 - PatientLink UI screens and forms
 
-**4) Caching Dependency - Parales**
-- Setup of session
+**4) Caching Dependency Setup - Parales**
 - Sessions must persist between restarts
 
-**5) Caching Dependency - Sucalit**
-- Interaction with logout
+**5) Caching Dependency Clear - Sucalit**
 - Sessions must be cleared after logout
 
-**6) Logging Out Functionality - Sucalit**
+**6) Log In/Out Navigation - Sucalit**
 - User must be able to log in or log out
 
 **7) Router Change Reaction - Sucalit**
